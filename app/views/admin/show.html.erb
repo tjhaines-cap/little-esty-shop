@@ -4,7 +4,7 @@
 
 <h3>Incomplete Invoices</h3>
 <% @invoices.each do |invoice| %>
-  <% invoice.invoice_items.each do |ii| %>
+  <% invoice.invoice_items.uniq.each do |ii| %>
     <% if ii.status != "shipped" %>
       <%= link_to "#{ii.invoice_id}", "/admin/invoices/#{ii.invoice_id}" %><br>
     <% end %>

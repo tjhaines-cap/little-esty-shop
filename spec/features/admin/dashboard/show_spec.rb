@@ -77,13 +77,13 @@ RSpec.describe "Admin dashboard" do
 
   it "displays the incomplete invoices and links to that invoices admin show" do
     visit '/admin'
-
+    
     expect(page).to have_content "Incomplete Invoices"
     expect(page).to have_content(@invoice_1.id)
     expect(page).to have_content(@invoice_2.id)
     expect(page).to have_content(@invoice_3.id)
     expect(page).to have_content(@invoice_4.id)
-    
+
     expect(page).to_not have_content(@invoice_5.id)
     expect(page).to_not have_content(@invoice_6.id)
     expect(page).to_not have_content(@invoice_7.id)
