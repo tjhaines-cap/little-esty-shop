@@ -92,7 +92,7 @@ RSpec.describe 'merchant items index page' do
     ii12 = InvoiceItem.create!(quantity: 0, unit_price: 100, status: 2, item_id: item12.id, invoice_id: invoice2.id)
 
     visit "/merchants/#{merch1.id}/items"
-    save_and_open_page
+
       within "#favorite" do
         expect(page).to have_content("Top 5 Most Popular Items")
         expect(page).to have_content("Top selling date for #{item1.name} was #{item1.invoices.first.created_at.strftime("%B %d, %Y")}")
