@@ -29,8 +29,4 @@ class Merchant < ApplicationRecord
   def top_5_items
     top_5_items = self.items.joins(invoice_items: [:invoice]).where(invoices: {status: 2}).select("items.*, sum(invoice_items.quantity * invoice_items.unit_price)").group(:id).order(sum: :desc).limit(5).to_a
   end
-
 end
-
-# merchant_items = Item.where(merchant_id: Merchant.all[26])
-# merchant_invoices = merchant_invoices.pluck(:id)
