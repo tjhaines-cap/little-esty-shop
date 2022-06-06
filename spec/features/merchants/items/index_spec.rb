@@ -96,9 +96,9 @@ RSpec.describe 'merchant items index page' do
     visit "/merchants/#{merch1.id}/items"
     # save_and_open_page
     # binding.pry
-      within "favorite" do
+      within "#favorite" do
         expect(page).to have_content("Top 5 Most Popular Items")
-        expect(page).to have_content("Top selling date for #{item1.name} was #{item1.invoice.created_at}")
+        expect(page).to have_content("Top selling date for #{item1.name} was #{item1.invoices.first.created_at}")
       end
   end
 end
