@@ -10,6 +10,15 @@ class Merchant < ApplicationRecord
     InvoiceItem.where(item_id: merchant_items).where(status: [0,1]).order(:created_at)
   end
 
+  def top_5_items_by_day
+    items.joins(:invoice_items, :invoices, :transactions)
+    .where("transactions.status = 'success', invoices.status = 2")
+    .select("invoice_items.quantity, items.name")
+    .group(:id)
+    .order(:quantity)
+    .distinct
+    .limit(5)
+  end
 
   def top_5_customers
     #Find items associated with the curent merchant

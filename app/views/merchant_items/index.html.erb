@@ -2,10 +2,11 @@
 
 <h3>Top 5 Most Popular Items</h3>
 <div id="favorite">
-<% @merchant.items.top_5_items_by_day.each do |item| %>
+<% @merchant.top_5_items_by_day.each do |item| %>
   <%= "Top selling date for #{item.name} was #{item.invoice.created_at}." %>
 <% end %>
 </div>
+
 <h3>Merchant's Items:</h3>
 <ul>
 <div id="disabled">
