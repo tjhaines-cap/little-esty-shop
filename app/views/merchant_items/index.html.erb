@@ -1,10 +1,9 @@
 <h1><%= "#{@merchant.name}" %></h1>
 
 <h3>Top 5 Most Popular Items</h3>
-<div id="favorite">
-  
+<div class="favorite">
 <% @merchant.top_5_items_by_day.each do |item| %>
-  <%= "Top selling date for #{item.name} was #{item.invoice.created_at}." %>
+  <%= "Top selling date for #{item.name} was #{item.invoices.first.created_at}." %>
 <% end %>
 </div>
 

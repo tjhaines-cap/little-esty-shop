@@ -2,6 +2,7 @@ class Merchant < ApplicationRecord
   has_many :items, dependent: :destroy
   has_many :invoice_items, through: :items
   has_many :invoices, through: :invoice_items
+  has_many :transactions, through: :invoice_items
 
   validates_presence_of :name, :status
 
@@ -11,12 +12,12 @@ class Merchant < ApplicationRecord
   end
 
   def top_5_items_by_day
-    items.joins(:invoice_items, :invoices, :transactions)
-    .where("transactions.result = ? and invoice.status = ?", "success", 2)
-    .distinct
-    .select("invoice_items.quantity, invoices.created_at")
-    .group(:quantity)
-    .order(created_at: :desc)
+    # binding.pry
+    items.joins(:transactions)
+    .where("transactions.result = ? and invoices.status = ?", "success", 2)
+    .select("items.*, sum(invoice_items.quantity)")
+    .order(sum: :desc)
+    .group(:id)
     .limit(5)
   end
 

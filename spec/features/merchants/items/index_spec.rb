@@ -94,7 +94,7 @@ RSpec.describe 'merchant items index page' do
 
 
     visit "/merchants/#{merch1.id}/items"
-    save_and_open_page
+    # save_and_open_page
     # binding.pry
       within "favorite" do
         expect(page).to have_content("Top 5 Most Popular Items")
