@@ -11,10 +11,9 @@ class Merchant < ApplicationRecord
   end
 
   def top_5_items_by_day
-    items.joins(:invoice_items, :invoices, :transactions)
-    .where("transactions.status = 'success', invoices.status = 2")
+    items.joins(:invoice_items, :transactions)
+    .where("transactions.result = ? and invoices.status = ?", "success", 2)
     .select("invoice_items.quantity, items.name")
-    .group(:id)
     .order(:quantity)
     .distinct
     .limit(5)
