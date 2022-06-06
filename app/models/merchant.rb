@@ -12,7 +12,6 @@ class Merchant < ApplicationRecord
   end
 
   def top_5_items_by_day
-    # binding.pry
     items.joins(:transactions)
     .where("transactions.result = ? and invoices.status = ?", "success", 2)
     .select("items.*, sum(invoice_items.quantity)")

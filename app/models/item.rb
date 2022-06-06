@@ -9,6 +9,10 @@ class Item < ApplicationRecord
     self.unit_price / 100.00
   end
 
+  def day_converter
+    invoices.first.created_at.strftime("%B %d, %Y")
+  end
+
   def merchant_object
     Merchant.find(self.merchant_id)
   end

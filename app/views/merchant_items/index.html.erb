@@ -3,7 +3,7 @@
 <div id="favorite">
 <h3>Top 5 Most Popular Items</h3>
 <% @merchant.top_5_items_by_day.each do |item| %>
-  <%= "Top selling date for #{item.name} was #{item.invoices.first.created_at}." %>
+  <%= "Top selling date for #{item.name} was #{item.day_converter}." %><br>
 <% end %>
 </div>
 
