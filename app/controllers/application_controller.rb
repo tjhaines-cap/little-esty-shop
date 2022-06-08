@@ -6,11 +6,9 @@ class ApplicationController < ActionController::Base
   #               :number_of_commits
 
   
-
   # before_action :repo_name
   # before_action :usernames
   # before_action :pr_count
-  # before_action :avatar
 
 
   def welcome
@@ -43,15 +41,4 @@ class ApplicationController < ActionController::Base
   #   username_search = UserSearch.new
   #   @usernames = username_search.repo_usernames
   # end
-
-  # def avatar
-  #   avatar_search = AvatarSearch.new
-  #   @avatar_urls = avatar_search.repo_avatars
-  # end
-
-
-  #add this to the layout to get the avatars to display
-  # <% @avatar_urls.each do |url| %>
-  #  <img src=<%= url %>>
-  # <% end %>
 end
