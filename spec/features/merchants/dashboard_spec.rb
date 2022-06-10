@@ -240,11 +240,11 @@ RSpec.describe "merchant dashboard", type: :feature do
   end
 
   it 'has link to view all merchant discounts' do
-    visit "merchants/#{@merch_1.id}/dashboard"
+    visit "/merchants/#{@merch_1.id}/dashboard"
 
     click_link("View all discounts")
 
-    expect(current_path).to eq("merchants/#{@merch_1.id}/discounts")
+    expect(current_path).to eq("/merchants/#{@merch_1.id}/discounts")
   end
 
 end
