@@ -38,15 +38,5 @@ RSpec.describe 'merchant discounts index page' do
     click_link("Create New Discount")
 
     expect(current_path).to eq("/merchants/#{@merch_1.id}/discounts/new")
-
-    fill_in "percentage", with: 40
-    fill_in "quantity_threshold", with: 20
-    click_button "Create Discount"
-
-    expect(current_path).to eq("/merchants/#{@merch_1.id}/discounts")
-    within "#discount-2" do
-      expect(page).to have_content("Discount 3: 40%")
-      expect(page).to have_content("Quantity Threshold: 20")
-    end
   end
 end
