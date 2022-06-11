@@ -39,4 +39,21 @@ RSpec.describe 'merchant discounts index page' do
 
     expect(current_path).to eq("/merchants/#{@merch_1.id}/discounts/new")
   end
+
+  it 'had a delete button next to each discount' do
+    visit "/merchants/#{@merch_1.id}/discounts"
+
+    click_button("Delete Discount 1")
+
+    expect(current_path).to eq("/merchants/#{@merch_1.id}/discounts")
+    within "#discount-0" do
+      expect(page).to have_content("Discount 2: 30%")
+      expect(page).to have_content("Quantity Threshold: 15")
+      click_link("Discount 2")
+      expect(current_path).to eq("/merchants/#{@merch_1.id}/discounts/#{@discount_2.id}")
+      visit "/merchants/#{@merch_1.id}/discounts"
+    end
+    expect(page).to_not have_content("Discount 1: 20%")
+    expect(page).to_not have_content("Quantity Threshold: 10")
+  end
 end
