@@ -14,4 +14,5 @@
         <%= "#{(index + 1)}. #{customer.first_name} #{customer.last_name} - #{customer.successful_transactions_with_merchant(@merchant)}"%>
     </div>
 <% end %>
+<%= link_to "View all discounts", "/merchants/#{@merchant.id}/discounts" %>
 
