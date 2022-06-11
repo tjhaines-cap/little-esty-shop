@@ -13,7 +13,7 @@ RSpec.describe 'merchant discounts index page' do
 
   it 'displays all bulk discounts for merchant including link to show page' do
     visit "/merchants/#{@merch_1.id}/discounts"
-# save_and_open_page
+
     within "#discount-0" do
       expect(page).to have_content("Discount 1: 20%")
       expect(page).to have_content("Quantity Threshold: 10")
