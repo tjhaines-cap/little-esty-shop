@@ -1,7 +1,8 @@
 <h1>Merchant Discounts</h1>
 <% @discounts.each_with_index do |discount, index| %>
   <div id="discount-<%= index %>">
-    <%= link_to "Discount #{(index + 1)}", "/merchants/#{@merchant_id}/discounts/#{discount.id}" %>: <%=discount.percentage%>%<br>
+    <%= link_to "Discount #{(index + 1)}", "/merchants/#{@merchant_id}/discounts/#{discount.id}" %>: <%=discount.percentage%>%
+    <%= link_to "Delete Discount #{(index + 1)}", "/merchants/#{@merchant_id}/discounts/#{discount.id}", method: :delete%><br>
     Quantity Threshold: <%= discount.quantity %><br>
   </div>
 <% end %>
