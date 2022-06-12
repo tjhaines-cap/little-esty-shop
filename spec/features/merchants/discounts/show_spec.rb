@@ -15,11 +15,11 @@ RSpec.describe 'discount show page', type: :feature do
     
     visit "/merchants/#{@merch_1.id}/discounts/#{@discount_1.id}"
 
-    expect(page).to have_content("Percentage: 20%")
+    expect(page).to have_content("Discount: 20%")
     expect(page).to have_content("Quantity Threshold: 10")
-    expect(page).to_not have_content("Percentage: 30%")
+    expect(page).to_not have_content("Discount: 30%")
     expect(page).to_not have_content("Quantity Threshold: 15")
-    expect(page).to_not have_content("Percentage: 15%")
+    expect(page).to_not have_content("Discount: 15%")
     expect(page).to_not have_content("Quantity Threshold: 5")
   end
 
