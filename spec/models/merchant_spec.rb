@@ -186,6 +186,9 @@ RSpec.describe Merchant do
         expect(@merch_2.best_day.strftime("%A, %B %d, %Y")).to eq("Monday, May 30, 2022")
       end
     end
+
+
+
   end
     
   describe 'class methods' do
