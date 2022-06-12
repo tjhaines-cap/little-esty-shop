@@ -1,3 +1,4 @@
 <h1> Discount </h1>
-<p>Percentage: <%= @discount.percentage %>%</p>
+<p>Discount: <%= @discount.percentage %>%</p>
 <p>Quantity Threshold: <%= @discount.quantity %>%</p>
+<%= link_to "Edit Discount", "/merchants/#{@merchant_id}/discounts/#{@discount.id}/edit" %>
