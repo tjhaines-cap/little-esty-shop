@@ -118,7 +118,7 @@ RSpec.describe "merchant's invoice show page", type: :feature do
 
     it "displays link to discount applied next to each invoice item if applicable" do
       visit "/merchants/#{@merch_1.id}/invoices/#{@invoice_1.id}"
-save_and_open_page
+
       within "#ii-#{@ii_1.id}" do
         expect(page).to_not have_content("Discount Applied")
       end
