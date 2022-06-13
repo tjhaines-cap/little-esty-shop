@@ -81,20 +81,21 @@ RSpec.describe Invoice do
         InvoiceItem.create!(item_id: @item_1.id, invoice_id: @invoice_1.id, quantity: 5, unit_price: @item_1.unit_price, status: 2)
         InvoiceItem.create!(item_id: @item_2.id, invoice_id: @invoice_1.id, quantity: 15, unit_price: @item_2.unit_price, status: 2)
         InvoiceItem.create!(item_id: @item_4.id, invoice_id: @invoice_1.id, quantity: 12, unit_price: @item_4.unit_price, status: 2)
+        InvoiceItem.create!(item_id: @item_3.id, invoice_id: @invoice_1.id, quantity: 10, unit_price: @item_3.unit_price, status: 2)
         InvoiceItem.create!(item_id: @item_3.id, invoice_id: @invoice_2.id, quantity: 6, unit_price: @item_3.unit_price, status: 2)
       end
 
-      describe '#total_revenue' do
+      describe '#total_revenue_by_merchant' do
         it 'total revenue calculates revenue without discounts' do
-          expect(@invoice_1.total_revenue).to eq(670000)
-          expect(@invoice_2.total_revenue).to eq(300000)
+          expect(@invoice_1.total_revenue_by_merchant(@merch_1.id)).to eq(670000)
+          expect(@invoice_2.total_revenue_by_merchant(@merch_2.id)).to eq(300000)
         end
       end
 
       describe '#discounted_revenue' do
         it 'calculates discounted revenue' do
-          expect(@invoice_1.discounted_revenue).to eq(536500)
-          expect(@invoice_2.discounted_revenue).to eq(255000)
+          expect(@invoice_1.discounted_revenue_by_merchant(@merch_1.id)).to eq(536500)
+          expect(@invoice_2.discounted_revenue_by_merchant(@merch_2.id)).to eq(255000)
         end
       end
     end
