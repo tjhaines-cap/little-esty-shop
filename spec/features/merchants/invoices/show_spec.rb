@@ -85,32 +85,35 @@ RSpec.describe "merchant's invoice show page", type: :feature do
   describe "Individual Project User Stories" do
 
     before :each do
-      @merch_1 = Merchant.create!(name: "Two-Legs Fashion")
+      @merch_1 = Merchant.create(name: "Schroeder-Jerde" )
       @merch_2 = Merchant.create(name: "Klein, Rempel and Jones")
 
       @discount_1 = @merch_1.bulk_discounts.create!(percentage: 20, quantity: 10)
       @discount_2 = @merch_1.bulk_discounts.create!(percentage: 30, quantity: 15)
       @discount_3 = @merch_2.bulk_discounts.create!(percentage: 15, quantity: 5)
- 
+    
       @item_1 = @merch_1.items.create!(name: "Two-Leg Pantaloons", description: "pants built for people with two legs", unit_price: 5000)
       @item_2 = @merch_1.items.create!(name: "Two-Leg Shorts", description: "shorts built for people with two legs", unit_price: 3000)
-
+      @item_3 = @merch_2.items.create!(name: "Shirt", description: "shirt for people", unit_price: 50000)
+      @item_4 = @merch_1.items.create!(name: "Double Legged Pant", description: "pants built for people with two legs", unit_price: 50000)
+      
       @cust_1 = Customer.create!(first_name: "Debbie", last_name: "Twolegs")
       @cust_2 = Customer.create!(first_name: "Tommy", last_name: "Doubleleg")
-
+      
       @invoice_1 = @cust_1.invoices.create!(status: 1)
-      @invoice_2 = @cust_1.invoices.create!(status: 2)
-      @invoice_3 = @cust_1.invoices.create!(status: 1)
-      @invoice_4 = @cust_2.invoices.create!(status: 1)
-      @invoice_5 = @cust_2.invoices.create!(status: 1)
-      @invoice_6 = @cust_2.invoices.create!(status: 1, created_at: "2021-05-29 17:44:03 UTC")
-
-      @ii_1 = InvoiceItem.create!(item_id: @item_1.id, invoice_id: @invoice_1.id, quantity: 1, unit_price: @item_1.unit_price, status: 0)
-      @ii_2 = InvoiceItem.create!(item_id: @item_2.id, invoice_id: @invoice_2.id, quantity: 2, unit_price: @item_2.unit_price, status: 1)
+      @invoice_2 = @cust_2.invoices.create!(status: 1)
+      
+      InvoiceItem.create!(item_id: @item_1.id, invoice_id: @invoice_1.id, quantity: 5, unit_price: @item_1.unit_price, status: 2)
+      InvoiceItem.create!(item_id: @item_2.id, invoice_id: @invoice_1.id, quantity: 15, unit_price: @item_2.unit_price, status: 2)
+      InvoiceItem.create!(item_id: @item_4.id, invoice_id: @invoice_1.id, quantity: 20, unit_price: @item_4.unit_price, status: 2)
+      InvoiceItem.create!(item_id: @item_3.id, invoice_id: @invoice_2.id, quantity: 6, unit_price: @item_3.unit_price, status: 2)
     end
 
     it "can display the total revenue not including discounts and the discounted revenue" do
-     
+      visit "/merchants/#{@merch_1.id}/invoices/#{@invoice_1.id}"
+
+      expect(page).to have_content("Regular Revenue: $25.00")
+      expect(page).to have_content("Discounted Revenue: $511.50")
     end
   end
 end
