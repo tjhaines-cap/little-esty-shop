@@ -84,16 +84,16 @@ RSpec.describe Invoice do
         InvoiceItem.create!(item_id: @item_3.id, invoice_id: @invoice_2.id, quantity: 6, unit_price: @item_3.unit_price, status: 2)
       end
 
-      describe '#regular_revenue' do
-        it 'calculates revenue not inluding discounts' do
-          expect(@invoice_1.regular_revenue).to eq(25000)
-          expect(@invoice_2.regular_revenue).to eq(0)
+      describe '#total_revenue' do
+        it 'total revenue calculates revenue without discounts' do
+          expect(@invoice_1.total_revenue).to eq(670000)
+          expect(@invoice_2.total_revenue).to eq(300000)
         end
       end
 
       describe '#discounted_revenue' do
         it 'calculates discounted revenue' do
-          expect(@invoice_1.discounted_revenue).to eq(511500)
+          expect(@invoice_1.discounted_revenue).to eq(536500)
           expect(@invoice_2.discounted_revenue).to eq(255000)
         end
       end

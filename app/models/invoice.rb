@@ -21,16 +21,6 @@ class Invoice < ApplicationRecord
     Merchant.find(id)
   end
 
-  def regular_revenue
-    # binding.pry
-    if bulk_discounts != []
-      invoice_items.where("quantity < #{bulk_discounts.minimum(:quantity)}")
-                    .sum("unit_price * quantity")
-    else
-      return 0
-    end
-  end
-
   def discounted_revenue
     # #find the bulk discount for one invoice itme
     # # bulk_discounts.find_by("bulk_discounts.quantity >= #{invoice_items[0].quantity}")
@@ -45,6 +35,8 @@ class Invoice < ApplicationRecord
         discount = invoice_item.discount[0]
         if discount
           sum += (invoice_item.quantity * invoice_item.unit_price) - ((invoice_item.quantity * invoice_item.unit_price) * (discount.percentage / 100.0))
+        else
+          sum += (invoice_item.quantity * invoice_item.unit_price)
         end
       end
     end

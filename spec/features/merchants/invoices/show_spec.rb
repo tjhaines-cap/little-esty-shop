@@ -112,8 +112,8 @@ RSpec.describe "merchant's invoice show page", type: :feature do
     it "can display the total revenue not including discounts and the discounted revenue" do
       visit "/merchants/#{@merch_1.id}/invoices/#{@invoice_1.id}"
 
-      expect(page).to have_content("Regular Revenue: $250.00")
-      expect(page).to have_content("Discounted Revenue: $5,115.00")
+      expect(page).to have_content("Total Revenue: $6,700.00")
+      expect(page).to have_content("Discounted Revenue: $5,365.00")
     end
   end
 end
