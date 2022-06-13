@@ -186,6 +186,47 @@ RSpec.describe Merchant do
         expect(@merch_2.best_day.strftime("%A, %B %d, %Y")).to eq("Monday, May 30, 2022")
       end
     end
+
+    # describe "revenue calculations" do
+
+    #   before :each do
+    #     @merch_1 = Merchant.create(name: "Schroeder-Jerde" )
+    #     @merch_2 = Merchant.create(name: "Klein, Rempel and Jones")
+
+    #     @discount_1 = @merch_1.bulk_discounts.create!(percentage: 20, quantity: 10)
+    #     @discount_2 = @merch_1.bulk_discounts.create!(percentage: 30, quantity: 15)
+    #     @discount_3 = @merch_2.bulk_discounts.create!(percentage: 15, quantity: 5)
+      
+    #     @item_1 = @merch_1.items.create!(name: "Two-Leg Pantaloons", description: "pants built for people with two legs", unit_price: 5000)
+    #     @item_2 = @merch_1.items.create!(name: "Two-Leg Shorts", description: "shorts built for people with two legs", unit_price: 3000)
+    #     @item_3 = @merch_2.items.create!(name: "Shirt", description: "shirt for people", unit_price: 50000)
+
+    #     @cust_1 = Customer.create!(first_name: "Debbie", last_name: "Twolegs")
+    #     @cust_2 = Customer.create!(first_name: "Tommy", last_name: "Doubleleg")
+       
+    #     @invoice_1 = @cust_1.invoices.create!(status: 1)
+    #     @invoice_2 = @cust_2.invoices.create!(status: 1)
+        
+    #     InvoiceItem.create!(item_id: @item_1.id, invoice_id: @invoice_1.id, quantity: 5, unit_price: @item_1.unit_price, status: 2)
+    #     InvoiceItem.create!(item_id: @item_2.id, invoice_id: @invoice_1.id, quantity: 15, unit_price: @item_2.unit_price, status: 2)
+    #     InvoiceItem.create!(item_id: @item_3.id, invoice_id: @invoice_2.id, quantity: 6, unit_price: @item_3.unit_price, status: 2)
+    #   end
+
+    #   describe '#regular_revenue' do
+    #     it 'calculates revenue not inluding discounts' do
+    #       expect(@merch_1.regular_revenue).to eq(25000)
+    #       expect(@merch_2.regular_revenue).to eq(0)
+    #     end
+    #   end
+
+    #   describe '#discounted_revenue' do
+    #     it 'calculates discounted revenue' do
+    #       expect(@merch_1.discounted_revenue).to eq(31500)
+    #       expect(@merch_2.discounted_revenue).to eq(255000)
+    #     end
+    #   end
+    # end
+
   end
     
   describe 'class methods' do

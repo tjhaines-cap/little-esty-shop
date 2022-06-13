@@ -3,6 +3,9 @@ class Item < ApplicationRecord
   has_many :invoices, through: :invoice_items
   belongs_to :merchant
 
+  #Add test if I keep this in
+  has_many :bulk_discounts, through: :merchant
+
   validates_presence_of :name, :description, :unit_price, :status
 
   def unit_price_to_dollars
