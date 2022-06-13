@@ -103,10 +103,10 @@ RSpec.describe "merchant's invoice show page", type: :feature do
       @invoice_1 = @cust_1.invoices.create!(status: 1)
       @invoice_2 = @cust_2.invoices.create!(status: 1)
       
-      InvoiceItem.create!(item_id: @item_1.id, invoice_id: @invoice_1.id, quantity: 5, unit_price: @item_1.unit_price, status: 2)
-      InvoiceItem.create!(item_id: @item_2.id, invoice_id: @invoice_1.id, quantity: 15, unit_price: @item_2.unit_price, status: 2)
-      InvoiceItem.create!(item_id: @item_4.id, invoice_id: @invoice_1.id, quantity: 12, unit_price: @item_4.unit_price, status: 2)
-      InvoiceItem.create!(item_id: @item_3.id, invoice_id: @invoice_2.id, quantity: 6, unit_price: @item_3.unit_price, status: 2)
+      @ii_1 = InvoiceItem.create!(item_id: @item_1.id, invoice_id: @invoice_1.id, quantity: 5, unit_price: @item_1.unit_price, status: 2)
+      @ii_2 = InvoiceItem.create!(item_id: @item_2.id, invoice_id: @invoice_1.id, quantity: 15, unit_price: @item_2.unit_price, status: 2)
+      @ii_3 = InvoiceItem.create!(item_id: @item_4.id, invoice_id: @invoice_1.id, quantity: 12, unit_price: @item_4.unit_price, status: 2)
+      @ii_4 = InvoiceItem.create!(item_id: @item_3.id, invoice_id: @invoice_2.id, quantity: 6, unit_price: @item_3.unit_price, status: 2)
     end
 
     it "can display the total revenue not including discounts and the discounted revenue" do
@@ -114,6 +114,24 @@ RSpec.describe "merchant's invoice show page", type: :feature do
 
       expect(page).to have_content("Total Revenue: $6,700.00")
       expect(page).to have_content("Discounted Revenue: $5,365.00")
+    end
+
+    it "displays link to discount applied next to each invoice item if applicable" do
+      visit "/merchants/#{@merch_1.id}/invoices/#{@invoice_1.id}"
+save_and_open_page
+      within "#ii-#{@ii_1.id}" do
+        expect(page).to_not have_content("Discount Applied")
+      end
+      within "#ii-#{@ii_2.id}" do
+        click_link("Discount Applied")
+        expect(current_path).to eq("/merchants/#{@merch_1.id}/discounts/#{@discount_2.id}")
+        visit "/merchants/#{@merch_1.id}/invoices/#{@invoice_1.id}"
+      end
+      within "#ii-#{@ii_3.id}" do
+        click_link("Discount Applied")
+        expect(current_path).to eq("/merchants/#{@merch_1.id}/discounts/#{@discount_1.id}")
+        visit "/merchants/#{@merch_1.id}/invoices/#{@invoice_1.id}"
+      end
     end
   end
 end
