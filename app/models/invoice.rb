@@ -3,8 +3,6 @@ class Invoice < ApplicationRecord
   has_many :transactions, dependent: :destroy
   has_many :invoice_items
   has_many :items, through: :invoice_items
-
-  #add test if i keep it in
   has_many :bulk_discounts, through: :items
 
   enum status: ['cancelled','in progress', 'completed']
@@ -24,13 +22,27 @@ class Invoice < ApplicationRecord
   end
 
   def regular_revenue
-    # binding.pry
     invoice_items.where("quantity < #{bulk_discounts.minimum(:quantity)}")
                   .sum("unit_price * quantity")
-    # invoice_items.regular_revenue
-    # #find min quantity
-    # bulk_discounts.minimum(:quantity)
-    # #access bulk discounts for merchant for item
-    # invoice_items[0].item.merchant.bulk_discounts
   end
+
+  def discounted_revenue
+    # #find the bulk discount for one invoice itme
+    # # bulk_discounts.find_by("bulk_discounts.quantity >= #{invoice_items[0].quantity}")
+    # invoice_items.discounted_revenue
+    # wip = invoice_items.where("quantity > #{bulk_discounts.minimum(:quantity)}")
+    # binding.pry
+    #             .sum("(quantity * unit_price) * #{bulk_discounts.find_by("bulk_discounts.quantity >= #{invoice_items.quantity}")}")           
+    # #  .select("invoice_items.*, sum(invoice_items.discounted_revenue)").group(:id)
+    sum = 0
+    invoice_items.each do |invoice_item|
+      discount = invoice_item.discount[0]
+      if discount
+        sum += (invoice_item.quantity * invoice_item.unit_price) - ((invoice_item.quantity * invoice_item.unit_price) * (discount.percentage / 100.0))
+      end
+    end
+    return sum
+  end
+
+
 end

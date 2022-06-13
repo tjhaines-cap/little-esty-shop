@@ -86,6 +86,7 @@ RSpec.describe "merchant's invoice show page", type: :feature do
 
     before :each do
       @merch_1 = Merchant.create!(name: "Two-Legs Fashion")
+      @merch_2 = Merchant.create(name: "Klein, Rempel and Jones")
 
       @discount_1 = @merch_1.bulk_discounts.create!(percentage: 20, quantity: 10)
       @discount_2 = @merch_1.bulk_discounts.create!(percentage: 30, quantity: 15)
