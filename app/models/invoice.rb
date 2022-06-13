@@ -22,8 +22,13 @@ class Invoice < ApplicationRecord
   end
 
   def regular_revenue
-    invoice_items.where("quantity < #{bulk_discounts.minimum(:quantity)}")
-                  .sum("unit_price * quantity")
+    # binding.pry
+    if bulk_discounts != []
+      invoice_items.where("quantity < #{bulk_discounts.minimum(:quantity)}")
+                    .sum("unit_price * quantity")
+    else
+      return 0
+    end
   end
 
   def discounted_revenue
@@ -35,10 +40,12 @@ class Invoice < ApplicationRecord
     #             .sum("(quantity * unit_price) * #{bulk_discounts.find_by("bulk_discounts.quantity >= #{invoice_items.quantity}")}")           
     # #  .select("invoice_items.*, sum(invoice_items.discounted_revenue)").group(:id)
     sum = 0
-    invoice_items.each do |invoice_item|
-      discount = invoice_item.discount[0]
-      if discount
-        sum += (invoice_item.quantity * invoice_item.unit_price) - ((invoice_item.quantity * invoice_item.unit_price) * (discount.percentage / 100.0))
+    if bulk_discounts != []
+      invoice_items.each do |invoice_item|
+        discount = invoice_item.discount[0]
+        if discount
+          sum += (invoice_item.quantity * invoice_item.unit_price) - ((invoice_item.quantity * invoice_item.unit_price) * (discount.percentage / 100.0))
+        end
       end
     end
     return sum
