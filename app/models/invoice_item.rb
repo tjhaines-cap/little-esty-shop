@@ -10,11 +10,6 @@ class InvoiceItem < ApplicationRecord
 
   validates :status, inclusion: { in: statuses.keys }
 
-  def self.discounted_revenue
-    # binding.pry
-    # InvoiceItem.all[0].bulk_discounts
-  end
-
   def discount
     bulk_discounts.where("#{quantity} >= bulk_discounts.quantity")
                   .order(percentage: :desc)

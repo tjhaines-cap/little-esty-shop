@@ -34,7 +34,7 @@ class Invoice < ApplicationRecord
       invoice_items.each do |invoice_item|
         discount = invoice_item.discount[0]
         if discount
-          sum += (invoice_item.quantity * invoice_item.unit_price) - ((invoice_item.quantity * invoice_item.unit_price) * (discount.percentage / 100.0))
+          sum += (invoice_item.quantity * invoice_item.unit_price) * ((100 - discount.percentage) / 100.0)
         else
           sum += (invoice_item.quantity * invoice_item.unit_price)
         end
