@@ -107,6 +107,8 @@ RSpec.describe "merchant's invoice show page", type: :feature do
       @ii_2 = InvoiceItem.create!(item_id: @item_2.id, invoice_id: @invoice_1.id, quantity: 15, unit_price: @item_2.unit_price, status: 2)
       @ii_3 = InvoiceItem.create!(item_id: @item_4.id, invoice_id: @invoice_1.id, quantity: 12, unit_price: @item_4.unit_price, status: 2)
       @ii_4 = InvoiceItem.create!(item_id: @item_3.id, invoice_id: @invoice_2.id, quantity: 6, unit_price: @item_3.unit_price, status: 2)
+      @ii_5 = InvoiceItem.create!(item_id: @item_3.id, invoice_id: @invoice_1.id, quantity: 10, unit_price: @item_3.unit_price, status: 2)
+      
     end
 
     it "can display the total revenue not including discounts and the discounted revenue" do

@@ -23,5 +23,5 @@
   <% end %>
 <% end %>
 
-Total Revenue: $<%= number_with_delimiter('%.2f' % @invoice.total_revenue.fdiv(100)) %><br>
-Discounted Revenue: $<%= number_with_delimiter('%.2f' % @invoice.discounted_revenue(params[:merchant_id]).fdiv(100)) %>
+Total Revenue: $<%= number_with_delimiter('%.2f' % @invoice.total_revenue_by_merchant(params[:merchant_id]).fdiv(100)) %><br>
+Discounted Revenue: $<%= number_with_delimiter('%.2f' % @invoice.discounted_revenue_by_merchant(params[:merchant_id]).fdiv(100)) %>

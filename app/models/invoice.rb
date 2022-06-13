@@ -30,7 +30,6 @@ class Invoice < ApplicationRecord
     #             .sum("(quantity * unit_price) * #{bulk_discounts.find_by("bulk_discounts.quantity >= #{invoice_items.quantity}")}")           
     # #  .select("invoice_items.*, sum(invoice_items.discounted_revenue)").group(:id)
     sum = 0
-    binding.pry
     if bulk_discounts != []
       invoice_items.each do |invoice_item|
         discount = invoice_item.discount[0]
@@ -50,7 +49,6 @@ class Invoice < ApplicationRecord
 
   def discounted_revenue_by_merchant(merchant_id)
     sum = 0
-    # binding.pry
     if bulk_discounts != []
       invoice_items.where(item_id: Merchant.find(merchant_id).items.ids).each do |invoice_item|
         discount = invoice_item.discount[0]
