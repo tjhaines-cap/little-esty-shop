@@ -8,7 +8,8 @@
   <% end %></li>
   <li>Created at: <%= @invoice.created_at.strftime("%A, %B %d, %Y") %></li>
 
-  <li>Total Revenue: $<%= ('%.2f' % @invoice.total_revenue.fdiv(100)) %></li>
+  <li>Total Revenue: $<%= number_with_delimiter('%.2f' % @invoice.total_revenue.fdiv(100)) %></li>
+  <li>Discounted Revenue: $<%= number_with_delimiter('%.2f' % @invoice.discounted_revenue.fdiv(100)) %></li>
   <li> Customer Name: <%= @invoice.customer.first_name %> <%= @invoice.customer.last_name %></li>
 </ul>
 
