@@ -6,6 +6,7 @@ RSpec.describe Invoice do
     it { should have_many :transactions}
     it { should have_many :invoice_items}
     it { should have_many(:items).through(:invoice_items)}
+    it { should have_many(:bulk_discounts).through(:items)}
   end
 
   describe 'validations' do
@@ -81,10 +82,10 @@ RSpec.describe Invoice do
         InvoiceItem.create!(item_id: @item_3.id, invoice_id: @invoice_2.id, quantity: 6, unit_price: @item_3.unit_price, status: 2)
       end
 
-      describe '#non_discounted_revenue' do
+      describe '#regular_revenue' do
         it 'calculates revenue not inluding discounts' do
-          expect(@invoice_1.non_discounted_revenue).to eq(25000)
-          expect(@invoice_2.non_discounted_revenue).to eq(0)
+          expect(@invoice_1.regular_revenue).to eq(25000)
+          expect(@invoice_2.regular_revenue).to eq(0)
         end
       end
 

@@ -7,4 +7,5 @@ class InvoiceItem < ApplicationRecord
   enum status: ['packaged', 'pending', 'shipped']
 
   validates :status, inclusion: { in: statuses.keys }
+
 end
