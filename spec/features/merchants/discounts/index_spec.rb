@@ -56,4 +56,10 @@ RSpec.describe 'merchant discounts index page' do
     expect(page).to_not have_content("Discount 1: 20%")
     expect(page).to_not have_content("Quantity Threshold: 10")
   end
+
+  it 'displays the next 3 upcoming holidays' do
+    visit "/merchants/#{@merch_1.id}/discounts"
+
+    expect(page).to have_content("Upcoming Holidays")
+  end
 end
