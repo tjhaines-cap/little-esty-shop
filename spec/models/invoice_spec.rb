@@ -54,6 +54,18 @@ RSpec.describe Invoice do
       expect(item_2.merchant).to eq(merch_1)
       expect(item_3.merchant).to eq(merch_2)
     end
+
+    describe "#merchant_object" do
+      it "can return merchant for an invoice" do
+        expect(@invoice_1.merchant_object(@merch_1.id)).to eq(@merch_1)
+      end
+    end
+
+    describe "#total_revenue" do
+      it "returns the total revenue for an invoice" do
+        expect(@invoice_1.total_revenue).to eq(5000)
+      end
+    end
   end
 
   describe 'instance methods' do
@@ -92,10 +104,17 @@ RSpec.describe Invoice do
         end
       end
 
-      describe '#discounted_revenue' do
+      describe '#discounted_revenue_by_merchant' do
         it 'calculates discounted revenue' do
           expect(@invoice_1.discounted_revenue_by_merchant(@merch_1.id)).to eq(536500)
           expect(@invoice_2.discounted_revenue_by_merchant(@merch_2.id)).to eq(255000)
+        end
+      end
+      
+      describe '#discounted_revenue' do
+        it 'calculates discounted revenue' do
+          expect(@invoice_1.discounted_revenue).to eq(961500)
+          expect(@invoice_2.discounted_revenue).to eq(255000)
         end
       end
     end

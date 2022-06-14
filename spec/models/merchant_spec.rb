@@ -9,7 +9,6 @@ RSpec.describe Merchant do
     it { should have_many(:customers).through(:invoices)}
     it { should have_many(:transactions).through(:invoices)}
     it { should have_many :bulk_discounts}
-  
   end
 
   describe 'validations' do
@@ -187,51 +186,44 @@ RSpec.describe Merchant do
       end
     end
 
-    # describe "revenue calculations" do
+    describe "top_5_items" do
+      before :each do
+        @merch_1 = Merchant.create!(name: "Two-Legs Fashion")
+        @merch_2 = Merchant.create!(name: "One-Legs Fashion")
+    
+        @item_1 = @merch_1.items.create!(name: "Two-Leg Pantaloons", description: "pants built for people with two legs", unit_price: 5000)
+        @item_2 = @merch_1.items.create!(name: "Two-Leg Shorts", description: "shorts built for people with two legs", unit_price: 6000)
+        @item_3 = @merch_1.items.create!(name: "Hat", description: "hat built for people with two legs and one head", unit_price: 7000)
+        @item_4 = @merch_1.items.create!(name: "Double Legged Pant", description: "pants built for people with two legs", unit_price: 8000)
+        @item_5 = @merch_1.items.create!(name: "Stainless Steel, 5-Pocket Jean", description: "Shorts of Steel", unit_price: 9000)
+        @item_6 = @merch_1.items.create!(name: "String of Numbers", description: "54921752964273", unit_price: 10000)
+        @item_7 = @merch_2.items.create!(name: "Pirate Pants", description: "Peg legs don't need pant legs", unit_price: 1000)
+    
+        @cust_1 = Customer.create!(first_name: "Debbie", last_name: "Twolegs")
+    
+        @invoice_1 = @cust_1.invoices.create!(status: 2)
+    
+        @ii_1 = InvoiceItem.create!(item_id: @item_1.id, invoice_id: @invoice_1.id, quantity: 1, unit_price: @item_1.unit_price, status: 0)
+        @ii_2 = InvoiceItem.create!(item_id: @item_2.id, invoice_id: @invoice_1.id, quantity: 1, unit_price: @item_2.unit_price, status: 0)
+        @ii_3 = InvoiceItem.create!(item_id: @item_3.id, invoice_id: @invoice_1.id, quantity: 1, unit_price: @item_3.unit_price, status: 0)
+        @ii_4 = InvoiceItem.create!(item_id: @item_4.id, invoice_id: @invoice_1.id, quantity: 1, unit_price: @item_4.unit_price, status: 0)
+        @ii_5 = InvoiceItem.create!(item_id: @item_5.id, invoice_id: @invoice_1.id, quantity: 1, unit_price: @item_5.unit_price, status: 2)
+        @ii_6 = InvoiceItem.create!(item_id: @item_6.id, invoice_id: @invoice_1.id, quantity: 1, unit_price: @item_6.unit_price, status: 2)
+    
+        @trans_1 = @invoice_1.transactions.create!(credit_card_number: '4444555566667777', result: 'success')
+    
+      end
+    
+      it "returns the top 5 items for a merchant ranked by total revenue generated" do
+        expect(@merch_1.top_5_items).to eq([@item_6, @item_5, @item_4, @item_3, @item_2])
+      end
 
-    #   before :each do
-    #     @merch_1 = Merchant.create(name: "Schroeder-Jerde" )
-    #     @merch_2 = Merchant.create(name: "Klein, Rempel and Jones")
-
-    #     @discount_1 = @merch_1.bulk_discounts.create!(percentage: 20, quantity: 10)
-    #     @discount_2 = @merch_1.bulk_discounts.create!(percentage: 30, quantity: 15)
-    #     @discount_3 = @merch_2.bulk_discounts.create!(percentage: 15, quantity: 5)
-      
-    #     @item_1 = @merch_1.items.create!(name: "Two-Leg Pantaloons", description: "pants built for people with two legs", unit_price: 5000)
-    #     @item_2 = @merch_1.items.create!(name: "Two-Leg Shorts", description: "shorts built for people with two legs", unit_price: 3000)
-    #     @item_3 = @merch_2.items.create!(name: "Shirt", description: "shirt for people", unit_price: 50000)
-
-    #     @cust_1 = Customer.create!(first_name: "Debbie", last_name: "Twolegs")
-    #     @cust_2 = Customer.create!(first_name: "Tommy", last_name: "Doubleleg")
-       
-    #     @invoice_1 = @cust_1.invoices.create!(status: 1)
-    #     @invoice_2 = @cust_2.invoices.create!(status: 1)
-        
-    #     InvoiceItem.create!(item_id: @item_1.id, invoice_id: @invoice_1.id, quantity: 5, unit_price: @item_1.unit_price, status: 2)
-    #     InvoiceItem.create!(item_id: @item_2.id, invoice_id: @invoice_1.id, quantity: 15, unit_price: @item_2.unit_price, status: 2)
-    #     InvoiceItem.create!(item_id: @item_3.id, invoice_id: @invoice_2.id, quantity: 6, unit_price: @item_3.unit_price, status: 2)
-    #   end
-
-    #   describe '#regular_revenue' do
-    #     it 'calculates revenue not inluding discounts' do
-    #       expect(@merch_1.regular_revenue).to eq(25000)
-    #       expect(@merch_2.regular_revenue).to eq(0)
-    #     end
-    #   end
-
-    #   describe '#discounted_revenue' do
-    #     it 'calculates discounted revenue' do
-    #       expect(@merch_1.discounted_revenue).to eq(31500)
-    #       expect(@merch_2.discounted_revenue).to eq(255000)
-    #     end
-    #   end
-    # end
-
+    end
   end
     
   describe 'class methods' do
     
-    describe '#top_5_merchants' do
+    describe '#top_5_merchants_by_revenue' do
        
       before :each do
         @merch_1 = Merchant.create!(name: "Two-Legs Fashion")

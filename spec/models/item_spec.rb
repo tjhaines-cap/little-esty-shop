@@ -4,6 +4,8 @@ RSpec.describe Item do
   describe 'associations' do
     it { should have_many :invoice_items}
     it { should have_many(:invoices).through(:invoice_items)}
+    it { should belong_to :merchant }
+    it { should have_many(:bulk_discounts).through(:merchant) }
   end
 
   describe 'validations' do
@@ -23,6 +25,19 @@ RSpec.describe Item do
       expect(item_1.unit_price_to_dollars).to eq(50.86)
       expect(item_2.unit_price_to_dollars).to eq(29.99)
       expect(item_3.unit_price_to_dollars).to eq(60.00)
+    end
+  end
+
+  describe "#total_revenue" do
+    it "calculates total revenue for invoice items with this item" do
+      merch_1 = Merchant.create!(name: "Two-Legs Fashion")
+      item_1 = merch_1.items.create!(name: "Two-Leg Pantaloons", description: "pants built for people with two legs", unit_price: 5086)
+      cust_1 = Customer.create!(first_name: "Debbie", last_name: "Twolegs")
+      invoice_1 = cust_1.invoices.create!(status: 1)
+      InvoiceItem.create!(item_id: item_1.id, invoice_id: invoice_1.id, quantity: 5, unit_price: item_1.unit_price, status: 2)
+      InvoiceItem.create!(item_id: item_1.id, invoice_id: invoice_1.id, quantity: 10, unit_price: item_1.unit_price, status: 2)
+
+      expect(item_1.total_revenue).to eq("762.90")
     end
   end
 
