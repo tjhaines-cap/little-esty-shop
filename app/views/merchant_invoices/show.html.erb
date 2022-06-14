@@ -15,8 +15,8 @@
         <%= form.select :ii_status, ["packaged", "pending", "shipped"], selected: ii.status %>
         <%= form.submit "Update Invoice" %>
       <% end %>
-      <% if ii.discount != [] %>
-        <%= link_to "Discount Applied", "/merchants/#{ii.item.merchant_id}/discounts/#{ii.discount[0].id}" %>
+      <% if ii.discount_applied != [] %>
+        <%= link_to "Discount Applied", "/merchants/#{ii.item.merchant_id}/discounts/#{ii.discount_applied[0].id}" %>
       <% end %>
     </div>
     <br><br>
