@@ -59,7 +59,13 @@ RSpec.describe 'merchant discounts index page' do
 
   it 'displays the next 3 upcoming holidays' do
     visit "/merchants/#{@merch_1.id}/discounts"
+    
+    holiday_search = HolidaySearch.new
+    holidays = holiday_search.next_3_holidays
 
     expect(page).to have_content("Upcoming Holidays")
+    expect(page).to have_content("#{holidays[0].name} on #{holidays[0].date}")
+    expect(page).to have_content("#{holidays[1].name} on #{holidays[1].date}")
+    expect(page).to have_content("#{holidays[2].name} on #{holidays[2].date}")
   end
 end
