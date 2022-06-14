@@ -1,4 +1,3 @@
-require './app/poro/commit'
 require './app/service/esty_service'
 
 class CommitSearch
@@ -23,3 +22,4 @@ class CommitSearch
   end
 
 end
+
