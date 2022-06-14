@@ -15,13 +15,13 @@
         <%= form.select :ii_status, ["packaged", "pending", "shipped"], selected: ii.status %>
         <%= form.submit "Update Invoice" %>
       <% end %>
-      <% if ii.discount != [] %>
-        <%= link_to "Discount Applied", "/merchants/#{ii.item.merchant_id}/discounts/#{ii.discount[0].id}" %>
+      <% if ii.discount_applied != [] %>
+        <%= link_to "Discount Applied", "/merchants/#{ii.item.merchant_id}/discounts/#{ii.discount_applied[0].id}" %>
       <% end %>
     </div>
     <br><br>
   <% end %>
 <% end %>
 
-Total Revenue: $<%= number_with_delimiter('%.2f' % @invoice.total_revenue.fdiv(100)) %><br>
-Discounted Revenue: $<%= number_with_delimiter('%.2f' % @invoice.discounted_revenue.fdiv(100)) %>
+Total Revenue: $<%= number_with_delimiter('%.2f' % @invoice.total_revenue_by_merchant(params[:merchant_id]).fdiv(100)) %><br>
+Discounted Revenue: $<%= number_with_delimiter('%.2f' % @invoice.discounted_revenue_by_merchant(params[:merchant_id]).fdiv(100)) %>

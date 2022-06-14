@@ -10,7 +10,7 @@ class InvoiceItem < ApplicationRecord
 
   validates :status, inclusion: { in: statuses.keys }
 
-  def discount
+  def discount_applied
     bulk_discounts.where("#{quantity} >= bulk_discounts.quantity")
                   .order(percentage: :desc)
                   .limit(1)
