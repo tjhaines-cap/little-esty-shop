@@ -46,7 +46,6 @@ group :development, :test do
   gem 'simplecov'
   gem 'shoulda-matchers'
   gem 'orderly'
-  gem 'httparty'
   gem 'json'
 end
 

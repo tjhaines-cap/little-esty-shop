@@ -1,4 +1,4 @@
-require './app/poro/esty'
+require './app/poro/repo'
 require './app/service/esty_service'
 
 class RepoSearch
